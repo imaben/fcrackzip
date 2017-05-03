@@ -120,19 +120,19 @@ int default_method = DEFAULT_METHOD;
 method methods[] = {
 #if 0
 #elif defined(x__i386__) || defined(x__i386) || defined(xi386)
-  { "cpmask", init_cpmask, crack_cpmask, load_img },
-  { "zip1, TARGET_CPU=0", METHOD1_init_crack_pw, METHOD1_crack_pw, load_zip },
-  { "zip2, TARGET_CPU=0, USE_MULT_TAB", METHOD2_init_crack_pw, METHOD2_crack_pw, load_zip },
-  { "zip3, TARGET_CPU=5", METHOD3_init_crack_pw, METHOD3_crack_pw, load_zip },
-  { "zip4, TARGET_CPU=5, USE_MULT_TAB", METHOD4_init_crack_pw, METHOD4_crack_pw, load_zip },
-  { "zip5, TARGET_CPU=6", METHOD5_init_crack_pw, METHOD5_crack_pw, load_zip },
-  { "zip6, TARGET_CPU=6, USE_MULT_TAB", METHOD6_init_crack_pw, METHOD6_crack_pw, load_zip },
+    { "cpmask", init_cpmask, crack_cpmask, load_img },
+    { "zip1, TARGET_CPU=0", METHOD1_init_crack_pw, METHOD1_crack_pw, load_zip },
+    { "zip2, TARGET_CPU=0, USE_MULT_TAB", METHOD2_init_crack_pw, METHOD2_crack_pw, load_zip },
+    { "zip3, TARGET_CPU=5", METHOD3_init_crack_pw, METHOD3_crack_pw, load_zip },
+    { "zip4, TARGET_CPU=5, USE_MULT_TAB", METHOD4_init_crack_pw, METHOD4_crack_pw, load_zip },
+    { "zip5, TARGET_CPU=6", METHOD5_init_crack_pw, METHOD5_crack_pw, load_zip },
+    { "zip6, TARGET_CPU=6, USE_MULT_TAB", METHOD6_init_crack_pw, METHOD6_crack_pw, load_zip },
 #elif 1
-  { "cpmask", init_cpmask, crack_cpmask, load_img },
-  { "zip1", METHOD1_init_crack_pw, METHOD1_crack_pw, load_zip },
-  { "zip2, USE_MULT_TAB", METHOD2_init_crack_pw, METHOD2_crack_pw, load_zip },
+    { "cpmask", init_cpmask, crack_cpmask, load_img },
+    { "zip1", METHOD1_init_crack_pw, METHOD1_crack_pw, load_zip },
+    { "zip2, USE_MULT_TAB", METHOD2_init_crack_pw, METHOD2_crack_pw, load_zip },
 #else
 #endif
-  { 0, 0, 0, 0 }
+    { 0, 0, 0, 0 }
 };
 

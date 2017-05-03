@@ -37,10 +37,10 @@ extern const char *file_path[MAX_FILES];
 extern int file_count;
 
 typedef struct {
-  char *desc;
-  void (*init_crack_pw)(void);
-  int (*crack_pw)(gen_func, callback_func);
-  void (*load_file)(const char *);
+    char *desc;
+    void (*init_crack_pw)(void);
+    int (*crack_pw)(gen_func, callback_func);
+    void (*load_file)(const char *);
 } method;
 
 extern method methods[];
