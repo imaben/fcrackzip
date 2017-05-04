@@ -31,6 +31,8 @@ typedef enum { FALSE = 0, TRUE = 1 } bool;
 #define DEVNULL ">NUL 2>&1"
 #endif
 
+#define MAX_THREAD_COUNT 128
+
 #include "crack.h"
 
 int use_unzip;
@@ -41,8 +43,11 @@ static int min_length = -1;
 static int max_length = -1;
 static int residuent = 0;
 static int modul = 1;
+static int thread_count = 1;
 
 static FILE *dict_file;
+
+thread_ctx **ctxs;
 
 int REGPARAM check_unzip (const char *pw)
 {
@@ -234,6 +239,10 @@ static int benchmark_gen (void)
     return brute_force_gen ();
 }
 
+static void *thread_proc(void *arg)
+{
+}
+
 static void benchmark (void)
 {
 #ifdef HAVE_GETTIMEOFDAY
@@ -301,6 +310,7 @@ static void usage (int ec)
             "          [-D|--dictionary]             use a dictionary\n"
             "          [-B|--benchmark]              execute a small benchmark\n"
             "          [-c|--charset characterset]   use characters from charset\n"
+            "          [-t|--thread thread]          the number of threads\n"
             "          [-h|--help]                   show this message\n"
             "          [--version]                   show the version of this program\n"
             "          [-V|--validate]               sanity-check the algortihm\n"
@@ -332,6 +342,7 @@ static struct option options[] =
     {"dictionary", no_argument, 0, 'D'},
     {"benchmark", no_argument, 0, 'B'},
     {"charset", required_argument, 0, 'c'},
+    {"thread", no_argument, 0, 't'},
     {"help", no_argument, 0, 'h'},
     {"validate", no_argument, 0, 'V'},
     {"verbose", no_argument, 0, 'v'},
@@ -350,7 +361,7 @@ int main (int argc, char *argv[])
     char *charset = "aA1!";
     enum { m_benchmark, m_brute_force, m_dictionary } mode = m_brute_force;
 
-    while ((c = getopt_long (argc, argv, "DbBc:hVvp:l:um:2:", options, &option_index)) != -1)
+    while ((c = getopt_long (argc, argv, "DbBc:thVvp:l:um:2:", options, &option_index)) != -1)
         switch (c)
         {
             case 'b':
@@ -424,7 +435,9 @@ int main (int argc, char *argv[])
             case 'u':
                 use_unzip = 1;
                 break;
-
+            case 't':
+                thread_count = atoi(optarg);
+                break;
             case 'h':
                 usage (0);
             case 'R':
@@ -452,6 +465,11 @@ int main (int argc, char *argv[])
     if (optind >= argc)
     {
         fprintf (stderr, "you have to specify one or more zip files (try --help)\n");
+        exit (1);
+    }
+
+    if (thread_count < 1 || thread_count > MAX_THREAD_COUNT) {
+        fprintf (stderr, "The number of threads is invalid, It's between 1 and %d\n", MAX_THREAD_COUNT);
         exit (1);
     }
 

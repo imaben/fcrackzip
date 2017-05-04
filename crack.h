@@ -1,6 +1,8 @@
 #ifndef CRACK_H
 #define CRACK_H
 
+#include <pthread.h>
+
 #define MAX_PW		40	/* should be low, but conservative.  */
 #define BENCHMARK_LOOPS 5000000
 
@@ -45,5 +47,13 @@ typedef struct {
 
 extern method methods[];
 extern int default_method;
+
+typedef struct {
+    u8 bf_next[256];
+    u8 bf_last;
+    pthread_t tid;
+} thread_ctx;
+
+extern thread_ctx **ctxs;
 
 #endif
